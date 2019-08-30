@@ -1,0 +1,23 @@
+.msg_success{
+	background-color: lightgreen;
+}
+
+.msg_error{
+	background-color: red;
+	color: white;
+}
+
+.logo{
+	text-align: center;
+}
+
+#text{
+	height: 70px;
+	width: 200px;
+}
+
+img.loadingClass{
+	display: inline-block;
+	height: 25px;
+	margin-left: 15px;
+}

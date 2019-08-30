@@ -1,0 +1,60 @@
+<div class="container-fluid">
+  <div class="row">
+    <button class="btn float-right ml-auto" (click)="addProject()">Add Project</button>
+    <div class="col-md-12">
+      <div class="card" id="allRecords">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title ">Projects List</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th>
+                  #
+                </th>
+                <th>
+                  Name
+                </th>
+                <th>
+                  Category
+                </th>
+                <th>
+                  Technology
+                </th>
+                <th>
+                  Actions
+                </th>
+              </thead>
+              <tbody *ngIf="allProjects.length">
+                <tr *ngFor="let project of allProjects; let i = index;">
+                  <td>
+                    {{i+1}}
+                  </td>
+                  <td>
+                    {{project.title || 'N/A'}}
+                  </td>
+                  <td>
+                    {{project.category.name || 'N/A'}}
+                  </td>
+                  <td>
+                    <span *ngFor='let technology of project.technology'>{{technology.name || 'N/A'}},</span>
+                  </td>
+                  <td>
+                    <!-- <button class="btn btn-danger float-right" (click)="deleteJob()">Delete</button>
+                    <button class="btn float-right" (click)="jobPostingForm.enable()">Edit</button> -->
+                    <a title="View Details" routerLink="/edit-project/{{project._id}}"><i class="fa fa-pencil-square-o fa-2x"
+                        style="color: green; margin-right: 15px;"></i></a>
+                    <a href="javascript: void(0);" (click)="deleteProject(project._id)" title="Delete Item"><i
+                        class="fas fa-trash fa-2x" style="color: red"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+              <h2 *ngIf="allProjects.length<=0" class="text-center">No Projects</h2>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

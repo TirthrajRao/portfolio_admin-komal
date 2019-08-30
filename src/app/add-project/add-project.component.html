@@ -1,0 +1,201 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title">Add Project</h4>
+          <p class="card-category">Project Details</p>
+          <button class="btn btn-danger float-right" *ngIf="router.url.includes('edit')"
+            (click)="deleteJob()">Delete</button>
+          <button class="btn float-right" *ngIf="router.url.includes('edit') && addProjectForm.disabled"
+            (click)="addProjectForm.enable()">Edit</button>
+          <button class="btn float-right" *ngIf="router.url.includes('edit') && !addProjectForm.disabled"
+            (click)="addProjectForm.disable()">Cancle</button>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="addProjectForm" *ngIf="singleProject">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="myLabel">Title:</label>
+                  <div class="form-group">
+                    <label class="bmd-label-floating"></label>
+                    <input type="text" formControlName="title" class="form-control" [(ngModel)]="singleProject.title">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="myLabel">Description:</label>
+                  <div class="form-group">
+                    <label class="bmd-label-floating"></label>
+                    <input type="text" formControlName="desc" [(ngModel)]="singleProject.desc" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="myLabel">category:</label>
+                  <select class="custom-select" formControlName="category" *ngIf="singleProject.category"
+                    [(ngModel)]="singleProject.category._id">
+                    <option value="" disabled selected>Choose Category</option>
+                    <option *ngFor='let category of allCategory' value='{{category._id}}'>{{category.name}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="myLabel">Technology:</label>
+                  <select class="custom-select" id="multiple-checkboxes" multiple="multiple"
+                    formControlName="technology">
+                    <option value="javascript" data-toggle="modal" data-target="#modaladdTechnologyForm">Add Technology
+                    </option>
+                    <option *ngFor='let technology of allTechnology' value='{{technology._id}}'>{{technology.name}}
+                    </option>
+                    <!-- <option value="javascript">JavaScript</option>
+                    <option value="java">Java</option>
+                    <option value="sql">SQL</option>
+                    <option value="jquery">Jquery</option>
+                    <option value=".net">.Net</option> -->
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="myLabel">Hashtag:</label>
+                  <div class="form-group">
+                    <label class="bmd-label-floating"></label>
+                    <input type="text" formControlName="hashtag" [(ngModel)]="singleProject.hashtag" class="form-control" id='hashtag'>
+                    <button class="plus" (click)='addHashtag(addProjectForm.value)'><i
+                      class="fa fa-plus" aria-hidden="true"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="myLabel">ColorPalette:</label>
+                  <div class="form-group">
+                    <label class="bmd-label-floating"></label>
+                    <div *ngIf="colorCode.length">
+                      <div class="chip" *ngFor='let color of colorCode, let i=index'>{{color}}
+                        <i class="fa fa-times" aria-hidden="true" (click)=removeColor(i)></i>
+                      </div>
+                    </div>
+                    <input type="text" formControlName="colorPalette" class="form-control"
+                      (input)="validColor(addProjectForm.value)" id='inputId'>
+                    <button class="plus" [disabled]="!isValidColor" (click)='addColor(addProjectForm.value)'><i
+                        class="fa fa-plus" aria-hidden="true"></i></button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="myLabel">FontFamily:</label>
+                  <div class="form-group">
+                    <label class="bmd-label-floating"></label>
+                    <input type="text" formControlName="fontFamily" class="form-control"
+                      [(ngModel)]="singleProject.fontFamily">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="myLabel">Products:</label>
+                  <div class="form-group">
+                    <ckeditor class="ckeditor" [editor]="Editor" [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="model.productsData" (ready)="onReadyproducts($event)"
+                      (change)="onChangeproducts($event)">
+                    </ckeditor>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="myLabel">services:</label>
+                  <ckeditor class="ckeditor" [editor]="Editor" [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="model.servicesData" (ready)="onReadyservices($event)"
+                    (change)="onChangeservices($event)">
+                  </ckeditor>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="myLabel">Features:</label>
+                  <div class="form-group">
+                    <ckeditor class="ckeditor" [editor]="Editor" [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="model.featuresData" (ready)="onReadyfeatures($event)"
+                      (change)="onChangefeatures($event)">
+                    </ckeditor>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <button class="btn btn-default" (click)="file.click()">Select
+                    Image</button>
+                  <input type="file" #file accept=".jpeg, .jpg, .png, .gif" hidden (change)="bannerSelected($event)"
+                    formControlName="images" multiple>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <button class="btn btn-success"
+              (click)="router.url.includes('edit') ? updateProject(addProjectForm.value) : addProject(addProjectForm.value)"
+              [disabled]="addProjectForm.invalid || addProjectForm.disabled">Save</button>
+            <button class="btn btn-danger" (click)="resetForm()">Cancle</button>
+          </form>
+        </div>
+        <div class="modal fade" id="modaladdTechnologyForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-body mx-3">
+                <form [formGroup]="addTechnologyForm">
+                  <h4 class="text-center">Add Technology</h4>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="myLabel">Title:</label>
+                      <div class="form-group">
+                        <label class="bmd-label-floating"></label>
+                        <input type="text" class="form-control" formControlName="name">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="myLabel">Description:</label>
+                      <div class="form-group">
+                        <label class="bmd-label-floating"></label>
+                        <input type="text" class="form-control" formControlName="desc">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <button class="btn btn-primary mt-2" type="submit" (click)="addTechnology(addTechnologyForm.value)"
+                      [disabled]='addTechnologyForm.invalid'>Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

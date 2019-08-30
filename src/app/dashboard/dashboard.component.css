@@ -1,0 +1,13 @@
+.navbar-brand{
+	color: black;
+	margin-bottom: 30px;
+}
+
+.card-stats .card-body {
+     text-align: left; 
+}
+
+iframe{
+	height:200px;
+	width:100%;
+}

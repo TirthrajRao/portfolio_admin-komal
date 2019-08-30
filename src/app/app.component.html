@@ -1,0 +1,59 @@
+<div class="wrapper">
+	<div class="sidebar col-xs-12 col-sm-4 col-md-3" style="background-size: cover; " data-color="purple"
+		data-background-color="white" data-image="assets/img/sidebar-1.jpg" *ngIf="auth.isLoggednIn()">
+		<div class="sidebar-wrapper">
+			<div class="logo"
+				style="background-image: url('assets/raoinfotech-logo.png'); width: 230px; height:200px; background-size: contain; background-position: center; background-repeat:no-repeat;">
+			</div>
+			<ul class="nav">
+				<li class="nav-item " *ngIf="auth.isLoggednIn()">
+					<a class="nav-link" routerLink="/dashboard">
+						<i class="material-icons">dashboard</i>
+						<p>Dashboard</p>
+					</a>
+				</li>
+				
+				<li class="nav-item ">
+					<a class="nav-link" routerLink="/project-list" *ngIf="auth.isLoggednIn()">
+						<i class="fas fa-id-card-alt"></i>
+						<p>Project</p>
+					</a>
+				</li>
+				<li class="nav-item ">
+					<a class="nav-link" routerLink="/technology-list" *ngIf="auth.isLoggednIn()">
+						<i class="fas fa-id-card-alt"></i>
+						<p>Technology</p>
+					</a>
+				</li>
+				<li class="nav-item ">
+					<a class="nav-link" routerLink="/catagory-list" *ngIf="auth.isLoggednIn()">
+						<i class="fas fa-id-card-alt"></i>
+						<p>Catagory</p>
+					</a>
+				</li>
+				<li class="nav-item ">
+					<a class="nav-link" routerLink="/login" (click)="Logout()" *ngIf="auth.isLoggednIn()">
+						<i class="fas fa-sign-out-alt" style="font-size: 17px;"></i>
+						<p>Log out</p>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="main-panel">
+		<nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top">
+			<div class="container-fluid">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
+					aria-expanded="false" aria-label="Toggle navigation" *ngIf="auth.isLoggednIn()">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="navbar-toggler-icon icon-bar"></span>
+					<span class="navbar-toggler-icon icon-bar"></span>
+					<span class="navbar-toggler-icon icon-bar"></span>
+				</button>
+			</div>
+		</nav>
+		<div class="content">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+</div>

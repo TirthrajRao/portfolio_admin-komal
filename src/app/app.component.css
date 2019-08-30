@@ -1,0 +1,25 @@
+.content{
+  background-color: #EDEDED;
+}
+
+.footer{
+  background-color: #fff;
+}
+
+.sidebar .sidebar-wrapper {
+    position: relative;
+ 	height: 100%;
+    overflow: auto;
+    width: 260px;
+    z-index: 4;
+    padding-bottom: 30px;
+}
+
+.navbar-toggler:not(:disabled):not(.disabled) {
+    cursor: pointer;
+    margin-left: auto;
+}
+
+a{
+	margin-right: 0 !important;
+}

@@ -1,0 +1,95 @@
+<div class="container-fluid">
+  <div class="row">
+    <button class="btn float-right ml-auto" data-toggle="modal" data-target="#modaladdTechnologyForm">Add
+      Technology</button>
+    <div class="col-md-12">
+      <div class="card" id="allRecords">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title ">Technology List</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th>
+                  #
+                </th>
+                <th>
+                  Name
+                </th>
+                <th>
+                  Description
+                </th>
+                <th>
+                  Actions
+                </th>
+              </thead>
+              <tbody *ngIf="allTechnology.length">
+                <tr *ngFor="let technology of allTechnology; let i = index;">
+                  <td>
+                    {{i+1}}
+                  </td>
+                  <td>
+                    {{technology.name || 'N/A'}}
+                  </td>
+                  <td>
+                    {{technology.desc || 'N/A'}}
+                  </td>
+                  <td>
+                    <a title="View Details" (click)="getTechnologyById(technology)" data-toggle="modal" data-target="#modaladdTechnologyForm" routerLink="/edit-project/{{technology._id}}"><i
+                        class="fa fa-pencil-square-o fa-2x" style="color: green; margin-right: 15px;"></i></a>
+                    <a href="javascript: void(0);" (click)="deleteTechnology(technology._id)" title="Delete Item"><i
+                        class="fas fa-trash fa-2x" style="color: red"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+              <h2 *ngIf="allTechnology.length<=0" class="text-center">No Technolgy</h2>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="modaladdTechnologyForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="text-center">Add Technology</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <form [formGroup]="addTechnologyForm" *ngIf="singleTechnology">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="myLabel">Name:</label>
+              <div class="form-group">
+                <label class="bmd-label-floating"></label>
+                <input type="text" class="form-control" formControlName="name" [(ngModel)]="singleTechnology.name">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="myLabel">Description:</label>
+              <div class="form-group">
+                <label class="bmd-label-floating"></label>
+                <input type="text" class="form-control" formControlName="desc"  [(ngModel)]="singleTechnology.desc">
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-primary mt-2" type="submit" (click)="singleTechnology._id?updateTechnology(addTechnologyForm.value):addTechnology(addTechnologyForm.value)"
+              [disabled]='addTechnologyForm.invalid'>Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

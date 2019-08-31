@@ -199,4 +199,17 @@ export class AdminService {
       })
     );
   }
+  getAllTag(){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.getItem('token')
+      })
+    };
+    return this.http.get(config.baseApiUrl + 'hashtag/').pipe(
+      map(res => {
+        return res;
+      })
+    );
+  }
 }

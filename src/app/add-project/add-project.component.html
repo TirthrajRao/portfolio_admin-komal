@@ -40,8 +40,8 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="myLabel">category:</label>
-                  <select class="custom-select" formControlName="category" *ngIf="singleProject.category"
-                    [(ngModel)]="singleProject.category._id">
+                  <select class="custom-select" formControlName="category" 
+                    >
                     <option value="" disabled selected>Choose Category</option>
                     <option *ngFor='let category of allCategory' value='{{category._id}}'>{{category.name}}</option>
                   </select>
@@ -65,15 +65,13 @@
                 </div>
               </div>
             </div>
-            <div class="row">
+            <div class="row>">
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="myLabel">Hashtag:</label>
                   <div class="form-group">
                     <label class="bmd-label-floating"></label>
-                    <input type="text" formControlName="hashtag" [(ngModel)]="singleProject.hashtag" class="form-control" id='hashtag'>
-                    <button class="plus" (click)='addHashtag(addProjectForm.value)'><i
-                      class="fa fa-plus" aria-hidden="true"></i></button>
+                    <input type="text" [(ngModel)]="singleProject.hashtag" data-role="tagsinput" class='form-control' formControlName="hashtag" id="hashtag">
                   </div>
                 </div>
               </div>
@@ -90,7 +88,7 @@
                       </div>
                     </div>
                     <input type="text" formControlName="colorPalette" class="form-control"
-                      (input)="validColor(addProjectForm.value)" id='inputId'>
+                      (input)="validColor(addProjectForm.value)" id='inputId' autocomplete="off">
                     <button class="plus" [disabled]="!isValidColor" (click)='addColor(addProjectForm.value)'><i
                         class="fa fa-plus" aria-hidden="true"></i></button>
                   </div>

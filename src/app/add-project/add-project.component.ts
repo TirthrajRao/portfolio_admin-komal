@@ -6,6 +6,7 @@ import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
 import { AdminService } from '../admin.service';
 import * as _ from 'lodash';
 declare var $: any;
+declare var Bloodhound: any;
 
 
 @Component({
@@ -31,8 +32,9 @@ export class AddProjectComponent implements OnInit {
   projectId;
   singleProject: any = [];
   hashtag: any = [];
+  allTag: any = [];
   constructor(public _adminService: AdminService, public router: Router, public route: ActivatedRoute) {
-
+    this.getAllTags();
     this.route.params.subscribe(params => {
       this.projectId = params.id;
       if (this.projectId) {
@@ -51,7 +53,7 @@ export class AddProjectComponent implements OnInit {
       services: new FormControl('', [Validators.required]),
       features: new FormControl('', [Validators.required]),
       images: new FormControl(''),
-      hashtag: new FormControl('', [Validators.required])
+      hashtag: new FormControl('')
     });
 
     this.addTechnologyForm = new FormGroup({
@@ -70,11 +72,42 @@ export class AddProjectComponent implements OnInit {
     //   }
     // });
     // 
+    console.log('this.allTag', this.allTag)
+    var tags = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.whitespace,
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      prefetch: {
+        url: this.allTag,
+      }
+    });
+    console.log('this.allTag', this.allTag)
+    tags.initialize();
+
+    $('#hashtag').tagsinput({
+      typeaheadjs: {
+        name: 'tags',
+        source: tags
+      }
+    });
+
     if (this.router.url.includes('edit')) {
       this.addProjectForm.disable();
     }
     this.getAllCategory();
     this.getAllTechnology();
+
+  }
+
+  getAllTags() {
+    this._adminService.getAllTag().subscribe((res: any) => {
+      console.log(res);
+      _.forEach(res.data, (tag => {
+        this.allTag.push(tag.hashtag);
+      }))
+      console.log(this.allTag)
+    }, err => {
+      console.log(err);
+    })
   }
   projectTech: any = [];
   getProjectById(projectId) {
@@ -119,11 +152,6 @@ export class AddProjectComponent implements OnInit {
     console.log('index========', index);
     this.colorCode.splice(index, 1);
     console.log("remove clor code=======>", this.colorCode)
-  }
-  addHashtag(form) {
-    this.hashtag.push(form.hashtag);
-    console.log(this.hashtag);
-    $('#hashtag').val('');
   }
 
   public onReadyproducts(editor) {
@@ -199,8 +227,10 @@ export class AddProjectComponent implements OnInit {
   }
   addProject(form) {
     console.log('data of form==================>', form);
-    this.addProjectForm.controls.hashtag.setValue(this.hashtag);
+    const val = $("#hashtag").tagsinput('items');
+    console.log('val==========>', val)
     this.addProjectForm.controls.colorPalette.setValue(this.colorCode);
+    this.addProjectForm.controls.hashtag.setValue(val);
     console.log("============", this.addProjectForm.value)
     const data = new FormData();
     _.forOwn(this.addProjectForm.value, (value, key) => {
@@ -214,7 +244,7 @@ export class AddProjectComponent implements OnInit {
     console.log('data======================>', data);
     this._adminService.addProject(data).subscribe((res: any) => {
       console.log('res of add project=========>', res);
-      this.addProjectForm.reset()
+      this.resetForm()
     }, err => {
       console.error(err);
     })
@@ -230,10 +260,13 @@ export class AddProjectComponent implements OnInit {
       console.log(err)
     })
   }
-
+  // *ngIf="singleProject.category" [(ngModel)]="singleProject.category._id"
   updateProject(form) {
     console.log('data of form==================>', form);
+    const val = $("#hashtag").tagsinput('items');
+    console.log('val==========>', val)
     this.addProjectForm.controls.colorPalette.setValue(this.colorCode);
+    this.addProjectForm.controls.hashtag.setValue(val);
     console.log("============", this.addProjectForm.value)
     const data = new FormData();
     _.forOwn(this.addProjectForm.value, (value, key) => {

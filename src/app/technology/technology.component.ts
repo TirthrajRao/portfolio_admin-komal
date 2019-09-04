@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AlertService } from '../alert.service';
 declare var $: any;
 
 @Component({
@@ -11,8 +12,8 @@ declare var $: any;
 export class TechnologyComponent implements OnInit {
   allTechnology: any = [];
   addTechnologyForm: FormGroup;
-  singleTechnology:any = [];
-  constructor(public _adminService: AdminService) {
+  singleTechnology: any = [];
+  constructor(public _adminService: AdminService, public _alertService: AlertService) {
     this.addTechnologyForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       desc: new FormControl('')
@@ -45,8 +46,10 @@ export class TechnologyComponent implements OnInit {
       $('#modaladdTechnologyForm').modal('hide');
       this.addTechnologyForm.reset();
       this.getAllTechnology();
+      this._alertService.successAlert("Technology Added Successfully");
     }, err => {
-      console.log(err)
+      console.log(err);
+      this._alertService.failurAlert();
     })
   }
 
@@ -55,22 +58,26 @@ export class TechnologyComponent implements OnInit {
     this._adminService.deleteTechnology(id).subscribe((res: any) => {
       console.log(res);
       this.getAllTechnology();
+      this._alertService.successAlert("Technology Deleted Successfully");
     }, err => {
-      console.log(err)
+      console.log(err);
+      this._alertService.failurAlert();
     })
   }
   updateTechnology(data) {
     console.log(data);
-    this._adminService.updateTechnology(data,this.singleTechnology._id).subscribe((res:any)=>{
+    this._adminService.updateTechnology(data, this.singleTechnology._id).subscribe((res: any) => {
       console.log(res);
       $('#modaladdTechnologyForm').modal('hide');
-      this.singleTechnology = []
-    },err=>{
+      this.singleTechnology = [];
+      this._alertService.successAlert("Technology updated Successfully");
+    }, err => {
       console.log(err);
+      this._alertService.failurAlert();
     })
   }
 
-  getTechnologyById(technology){
+  getTechnologyById(technology) {
     console.log(technology);
     this.singleTechnology = technology;
   }

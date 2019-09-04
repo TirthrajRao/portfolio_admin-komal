@@ -4,9 +4,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
 import { AdminService } from '../admin.service';
+import {AlertService} from '../alert.service';
 import * as _ from 'lodash';
 declare var $: any;
-declare var Bloodhound: any;
 
 
 @Component({
@@ -33,8 +33,12 @@ export class AddProjectComponent implements OnInit {
   singleProject: any = [];
   hashtag: any = [];
   allTag: any = [];
-  constructor(public _adminService: AdminService, public router: Router, public route: ActivatedRoute) {
+  public items = [
+     
+  ];
+  constructor(public _adminService: AdminService, public router: Router, public route: ActivatedRoute,public _alertService:AlertService) {
     this.getAllTags();
+  
     this.route.params.subscribe(params => {
       this.projectId = params.id;
       if (this.projectId) {
@@ -53,7 +57,7 @@ export class AddProjectComponent implements OnInit {
       services: new FormControl('', [Validators.required]),
       features: new FormControl('', [Validators.required]),
       images: new FormControl(''),
-      hashtag: new FormControl('')
+      hashtag: new FormControl('',[Validators.required])
     });
 
     this.addTechnologyForm = new FormGroup({
@@ -72,23 +76,6 @@ export class AddProjectComponent implements OnInit {
     //   }
     // });
     // 
-    console.log('this.allTag', this.allTag)
-    var tags = new Bloodhound({
-      datumTokenizer: Bloodhound.tokenizers.whitespace,
-      queryTokenizer: Bloodhound.tokenizers.whitespace,
-      prefetch: {
-        url: this.allTag,
-      }
-    });
-    console.log('this.allTag', this.allTag)
-    tags.initialize();
-
-    $('#hashtag').tagsinput({
-      typeaheadjs: {
-        name: 'tags',
-        source: tags
-      }
-    });
 
     if (this.router.url.includes('edit')) {
       this.addProjectForm.disable();
@@ -104,12 +91,14 @@ export class AddProjectComponent implements OnInit {
       _.forEach(res.data, (tag => {
         this.allTag.push(tag.hashtag);
       }))
-      console.log(this.allTag)
+      console.log(this.allTag);
+      this.items = this.allTag
     }, err => {
       console.log(err);
     })
   }
   projectTech: any = [];
+  projectCategory: any = [];
   getProjectById(projectId) {
     console.log(projectId);
     this._adminService.getProjectById(projectId).subscribe((res: any) => {
@@ -124,7 +113,11 @@ export class AddProjectComponent implements OnInit {
       _.forEach(this.singleProject.technology, tech => {
         this.projectTech.push(tech._id);
       });
+      console.log('this.singleProject.category',this.singleProject.category)
+      // this.projectCategory = this.singleProject.category
       this.addProjectForm.controls.technology.setValue(this.projectTech);
+      this.addProjectForm.controls.category.setValue(this.singleProject.category._id);
+      // this.addProjectForm.controls.colorPalette.setValue(this.singleProject.colorPalette);
       console.log('this.singleProject==========>', this.singleProject)
     }, err => {
       console.log(err);
@@ -227,16 +220,20 @@ export class AddProjectComponent implements OnInit {
   }
   addProject(form) {
     console.log('data of form==================>', form);
-    const val = $("#hashtag").tagsinput('items');
-    console.log('val==========>', val)
     this.addProjectForm.controls.colorPalette.setValue(this.colorCode);
-    this.addProjectForm.controls.hashtag.setValue(val);
-    console.log("============", this.addProjectForm.value)
+    const arr = [];
+    console.log("============", this.addProjectForm.value);
+    _.forEach(form.hashtag,tag=>{
+      arr.push(tag.display);
+    })
+    console.log('arrr========>',arr);
+     this.addProjectForm.controls.hashtag.setValue(arr);
     const data = new FormData();
     _.forOwn(this.addProjectForm.value, (value, key) => {
       data.append(key, value);
     });
     if (this.file.length > 0) {
+      console.log("=========this.s",this.file)
       for (let i = 0; i <= this.file.length; i++) {
         data.append('uploadFile', this.file[i]);
       }
@@ -244,9 +241,13 @@ export class AddProjectComponent implements OnInit {
     console.log('data======================>', data);
     this._adminService.addProject(data).subscribe((res: any) => {
       console.log('res of add project=========>', res);
-      this.resetForm()
+      this.resetForm();
+      this.colorCode = [];
+      this._alertService.successAlert('Project Added Successfully');
+      this.router.navigate(['/project-list'])
     }, err => {
       console.error(err);
+      this._alertService.failurAlert();
     })
   }
 
@@ -260,14 +261,23 @@ export class AddProjectComponent implements OnInit {
       console.log(err)
     })
   }
-  // *ngIf="singleProject.category" [(ngModel)]="singleProject.category._id"
+
   updateProject(form) {
-    console.log('data of form==================>', form);
-    const val = $("#hashtag").tagsinput('items');
-    console.log('val==========>', val)
+    console.log('data of form==================>', form)
     this.addProjectForm.controls.colorPalette.setValue(this.colorCode);
-    this.addProjectForm.controls.hashtag.setValue(val);
-    console.log("============", this.addProjectForm.value)
+    console.log("============", this.addProjectForm.value);
+    const arr = [];
+    console.log("============", this.addProjectForm.value);
+    _.forEach(form.hashtag,tag=>{
+      if(tag.display){
+        arr.push(tag.display);
+      } else{
+        arr.push(tag);
+      }
+    })
+    console.log('arrr========>',arr);
+     this.addProjectForm.controls.hashtag.setValue(arr);
+     console.log(this.addProjectForm.value)
     const data = new FormData();
     _.forOwn(this.addProjectForm.value, (value, key) => {
       data.append(key, value);
@@ -280,9 +290,12 @@ export class AddProjectComponent implements OnInit {
     console.log('data==in update====================>', data);
     this._adminService.updateProject(data, this.projectId).subscribe((res: any) => {
       console.log('res of add project=========>', res);
-      this.addProjectForm.reset()
+      this.resetForm();
+      this._alertService.successAlert('Project Updated Successfully');
+      this.router.navigate(['/project-list'])
     }, err => {
       console.error(err);
+      this._alertService.failurAlert();
     })
   }
 }

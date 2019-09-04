@@ -3,14 +3,14 @@ import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
-
+import {AlertService} from '../alert.service';
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-	constructor(private loginService: LoginService, private router: Router, private recaptchaV3Service: ReCaptchaV3Service) { }
+	constructor(private loginService: LoginService, private router: Router, private recaptchaV3Service: ReCaptchaV3Service,public _alertService:AlertService) { }
 
 	submitted = false;
 
@@ -42,15 +42,29 @@ export class LoginComponent implements OnInit {
 				detail['g-recaptcha-response'] = token;
 				this.loading = true;
 				this.loginService.authorize(detail).subscribe((res: any) => {
-					localStorage.setItem('users', JSON.stringify(res));
-					localStorage.setItem('token', JSON.stringify(res.token));
+					localStorage.setItem('users', JSON.stringify(res.data.data));
+					localStorage.setItem('token', JSON.stringify(res.data.token));
 					this.msg = 'Logged in successfully! ';
+					this._alertService.successAlert(this.msg);
+					this
 					this.router.navigate(['/dashboard']);
 				}, err => {
 					console.log('error', err);
 					this.errmsg = 'Incorrect info!';
 					this.loading = false;
+					this._alertService.failurAlert();
 				})
 			});
+		// this.loginService.authorize(detail).subscribe((res: any) => {
+		// 	localStorage.setItem('users', JSON.stringify(res));
+		// 	localStorage.setItem('token', JSON.stringify(res.token));
+		// 	this.msg = 'Logged in successfully! ';
+		// 	this.router.navigate(['/dashboard']);
+		// }, err => {
+		// 	console.log('error', err);
+		// 	this.errmsg = 'Incorrect info!';
+		// 	this.loading = false;
+		// })
+
 	}
 }

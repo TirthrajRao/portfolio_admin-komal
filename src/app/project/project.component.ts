@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { config } from '../config';
 import { AdminService } from '../admin.service';
 import { Router } from '@angular/router';
+import {AlertService} from '../alert.service';
 
 @Component({
   selector: 'app-project',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 export class ProjectComponent implements OnInit {
   allProjects: any = [];
   mediaUrl: any = config.baseMediaUrl;
-  constructor(public _adminService: AdminService,public router: Router) { }
+  constructor(public _adminService: AdminService,public router: Router,public _alertService:AlertService) { }
 
   ngOnInit() {
     this.getAllProjects();
@@ -36,8 +37,10 @@ export class ProjectComponent implements OnInit {
     this._adminService.deleteProject(projectId).subscribe((res:any)=>{
       console.log(res);
       this.getAllProjects();
+      this._alertService.successAlert("Project Deleted Successfully");
     },err=>{
-      console.log(err)
+      console.log(err);
+      this._alertService.failurAlert();
     })
   }
 

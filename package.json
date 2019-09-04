@@ -27,6 +27,7 @@
     "chartist": "^0.11.0",
     "core-js": "^2.5.4",
     "ng-recaptcha": "^4.3.0",
+    "ngx-chips": "^2.0.2",
     "ngx-filter-pipe": "^2.1.2",
     "ngx-pagination": "^3.2.1",
     "ngx-toastr": "^10.0.2",

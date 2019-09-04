@@ -21,7 +21,7 @@ export class LoginService {
 
 
 	authorize(detail) {
-		return this.http.post(config.baseApiUrl + "admin-login", detail)
+		return this.http.post(config.baseApiUrl + "admin/admin-login", detail)
 	}
 
 	sendToken(detail: string) {

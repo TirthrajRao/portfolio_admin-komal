@@ -20,6 +20,7 @@ import Swal from 'sweetalert2';
 import { RecaptchaModule } from 'angular-google-recaptcha';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { TagInputModule } from 'ngx-chips';
 import { ProjectComponent } from './project/project.component';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { TechnologyComponent } from './technology/technology.component';
@@ -46,6 +47,7 @@ import { CatagoryComponent } from './catagory/catagory.component';
     ReactiveFormsModule,
     CKEditorModule,
     RecaptchaV3Module,
+    TagInputModule,
     ToastrModule.forRoot({
       timeOut: 1000,
     }),

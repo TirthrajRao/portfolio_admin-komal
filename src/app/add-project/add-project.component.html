@@ -40,8 +40,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="myLabel">category:</label>
-                  <select class="custom-select" formControlName="category" 
-                    >
+                  <select class="custom-select" formControlName="category">
                     <option value="" disabled selected>Choose Category</option>
                     <option *ngFor='let category of allCategory' value='{{category._id}}'>{{category.name}}</option>
                   </select>
@@ -56,11 +55,6 @@
                     </option>
                     <option *ngFor='let technology of allTechnology' value='{{technology._id}}'>{{technology.name}}
                     </option>
-                    <!-- <option value="javascript">JavaScript</option>
-                    <option value="java">Java</option>
-                    <option value="sql">SQL</option>
-                    <option value="jquery">Jquery</option>
-                    <option value=".net">.Net</option> -->
                   </select>
                 </div>
               </div>
@@ -70,8 +64,10 @@
                 <div class="form-group">
                   <label class="myLabel">Hashtag:</label>
                   <div class="form-group">
-                    <label class="bmd-label-floating"></label>
-                    <input type="text" [(ngModel)]="singleProject.hashtag" data-role="tagsinput" class='form-control' formControlName="hashtag" id="hashtag">
+                    <tag-input [ngModel]="singleProject.hashtag" formControlName="hashtag">
+                      <tag-input-dropdown [autocompleteItems]="items" [dynamicUpdate]="false">
+                      </tag-input-dropdown>
+                    </tag-input>
                   </div>
                 </div>
               </div>

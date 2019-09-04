@@ -51,7 +51,7 @@ export class AddProjectComponent implements OnInit {
       desc: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
       technology: new FormControl('', [Validators.required]),
-      colorPalette: new FormControl('', [Validators.required]),
+      colorPalette: new FormControl(''),
       fontFamily: new FormControl('', [Validators.required]),
       products: new FormControl('', [Validators.required]),
       services: new FormControl('', [Validators.required]),

@@ -78,7 +78,7 @@
                   <label class="myLabel">ColorPalette:</label>
                   <div class="form-group">
                     <label class="bmd-label-floating"></label>
-                    <div *ngIf="colorCode.length">
+                    <div class="chip_section" *ngIf="colorCode.length">
                       <div class="chip" *ngFor='let color of colorCode, let i=index'>{{color}}
                         <i class="fa fa-times" aria-hidden="true" (click)=removeColor(i)></i>
                       </div>

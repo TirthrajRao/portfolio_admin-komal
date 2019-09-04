@@ -134,9 +134,10 @@ export class AddProjectComponent implements OnInit {
   }
   addColor(form) {
     console.log("==========", form.colorPalette);
-    this.colorCode.push(form.colorPalette);
+    if(this.colorCode.indexOf(form.colorPalette)=== -1){
+      this.colorCode.push(form.colorPalette);
+    }
     console.log('this.colorCode=========>', this.colorCode)
-    $(".Additem").text(($(".Additem").text() + ', ' + form.colorPalette).replace(/^, /, ''));
     $('#inputId').val('');
     this.isValidColor = false;
 

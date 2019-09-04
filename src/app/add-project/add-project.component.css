@@ -16,5 +16,10 @@
     border-radius: 21px;
     font-weight: 400;
   }
-  
+ .chip_section{
+    position: absolute;
+    top: -17px;
+    max-height: 28px;
+    overflow-y: scroll;
+ }
   

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { config } from './config';
 
@@ -11,6 +10,9 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Get all projects
+   */
   getAllProjects() {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -25,7 +27,11 @@ export class AdminService {
     );
   }
 
-  getProjectById(projectId){
+  /**
+   * Get project by id
+   * @param {String} projectId 
+   */
+  getProjectById(projectId) {
     console.log(projectId)
     const httpOptions = {
       headers: new HttpHeaders({
@@ -33,13 +39,16 @@ export class AdminService {
         'x-access-token': localStorage.getItem('token')
       })
     };
-    return this.http.get(config.baseApiUrl + 'project/'+projectId).pipe(
+    return this.http.get(config.baseApiUrl + 'project/' + projectId).pipe(
       map(res => {
         return res;
       })
     )
   }
 
+  /**
+   * Get All Category
+   */
   getAllCategory() {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -53,7 +62,9 @@ export class AdminService {
       })
     );
   }
-
+  /**
+    * Get All Technology
+    */
   getAllTechnology() {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -68,7 +79,11 @@ export class AdminService {
     );
   }
 
-  addProject(details){
+  /**
+   * Add Project
+   * @param {object} details 
+   */
+  addProject(details) {
     console.log(details)
     const httpOptions = {
       headers: new HttpHeaders({
@@ -83,21 +98,31 @@ export class AdminService {
     );
   }
 
-  updateProject(details,projectId){
-    console.log(details,projectId)
+  /**
+   * Update Project
+   * @param {Object} details 
+   * @param {String} projectId 
+   */
+  updateProject(details, projectId) {
+    console.log(details, projectId)
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'x-access-token': localStorage.getItem('token')
       })
     };
-    return this.http.put(config.baseApiUrl + 'project/'+projectId, details).pipe(
+    return this.http.put(config.baseApiUrl + 'project/' + projectId, details).pipe(
       map(res => {
         return res;
       })
     );
   }
-  deleteProject(projectId){
+
+  /**
+   * Delete project by id
+   * @param {String} projectId 
+   */
+  deleteProject(projectId) {
     console.log(projectId)
     const httpOptions = {
       headers: new HttpHeaders({
@@ -105,14 +130,18 @@ export class AdminService {
         'x-access-token': localStorage.getItem('token')
       })
     };
-    return this.http.delete(config.baseApiUrl + 'project/'+projectId).pipe(
+    return this.http.delete(config.baseApiUrl + 'project/' + projectId).pipe(
       map(res => {
         return res;
       })
     );
   }
 
-  addTechnology(details){
+  /**
+   * Add Technology
+   * @param  {object} details 
+   */
+  addTechnology(details) {
     console.log(details);
     const httpOptions = {
       headers: new HttpHeaders({
@@ -126,7 +155,12 @@ export class AdminService {
       })
     );
   }
-  deleteTechnology(id){
+
+  /**
+  * Delete Technology by id
+  * @param  {String} details 
+  */
+  deleteTechnology(id) {
     console.log(id);
     const httpOptions = {
       headers: new HttpHeaders({
@@ -134,28 +168,38 @@ export class AdminService {
         'x-access-token': localStorage.getItem('token')
       })
     };
-    return this.http.delete(config.baseApiUrl + 'technology/'+id).pipe(
+    return this.http.delete(config.baseApiUrl + 'technology/' + id).pipe(
       map(res => {
         return res;
       })
     );
   }
 
-  updateTechnology(details,technolgyId){
-    console.log(details,technolgyId)
+  /**
+   * Update technology by id
+   * @param {object} details 
+   * @param {String} technolgyId 
+   */
+  updateTechnology(details, technolgyId) {
+    console.log(details, technolgyId)
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'x-access-token': localStorage.getItem('token')
       })
     };
-    return this.http.put(config.baseApiUrl + 'technology/'+technolgyId, details).pipe(
+    return this.http.put(config.baseApiUrl + 'technology/' + technolgyId, details).pipe(
       map(res => {
         return res;
       })
     );
   }
-  addCategory(details){
+  
+  /**
+   * Add Category
+   * @param {object} details 
+   */
+  addCategory(details) {
     console.log(details);
     const httpOptions = {
       headers: new HttpHeaders({
@@ -169,8 +213,12 @@ export class AdminService {
       })
     );
   }
-  
-  deleteCategory(id){
+
+  /**
+   * Delete Category by id
+   * @param {String} id 
+   */
+  deleteCategory(id) {
     console.log(id);
     const httpOptions = {
       headers: new HttpHeaders({
@@ -178,28 +226,36 @@ export class AdminService {
         'x-access-token': localStorage.getItem('token')
       })
     };
-    return this.http.delete(config.baseApiUrl + 'category/'+id).pipe(
+    return this.http.delete(config.baseApiUrl + 'category/' + id).pipe(
       map(res => {
         return res;
       })
     );
   }
-
-  updateCategory(details,categoryId){
-    console.log(details,categoryId)
+ /**
+   * Update category by id
+   * @param {object} details 
+   * @param {String} categoryId 
+   */
+  updateCategory(details, categoryId) {
+    console.log(details, categoryId)
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'x-access-token': localStorage.getItem('token')
       })
     };
-    return this.http.put(config.baseApiUrl + 'category/'+categoryId, details).pipe(
+    return this.http.put(config.baseApiUrl + 'category/' + categoryId, details).pipe(
       map(res => {
         return res;
       })
     );
   }
-  getAllTag(){
+  
+  /**
+   * Get All Tags
+   */
+  getAllTag() {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -207,6 +263,23 @@ export class AdminService {
       })
     };
     return this.http.get(config.baseApiUrl + 'hashtag/').pipe(
+      map(res => {
+        return res;
+      })
+    );
+  }
+
+  /**
+   * Get all contact requests
+   */
+  getContactRequest() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.getItem('token')
+      })
+    };
+    return this.http.get(config.baseApiUrl + 'contact-us/').pipe(
       map(res => {
         return res;
       })

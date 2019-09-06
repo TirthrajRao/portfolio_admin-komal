@@ -1,7 +1,7 @@
 <div class="wrapper">
-	<div class="sidebar col-xs-12 col-sm-4 col-md-3" style="background-size: cover; " data-color="purple"
+	<div class="sidebar col-xs-12 col-sm-4 col-md-3" style="background-size: cover; " id="sidebar" data-color="purple"
 		data-background-color="white" data-image="assets/img/sidebar-1.jpg" *ngIf="auth.isLoggednIn()">
-		<div class="sidebar-wrapper">
+		<div class="sidebar-wrapper" id="scroller">
 			<div class="logo"
 				style="background-image: url('assets/raoinfotech-logo.png'); width: 230px; height:200px; background-size: contain; background-position: center; background-repeat:no-repeat;">
 			</div>
@@ -15,25 +15,31 @@
 				
 				<li class="nav-item ">
 					<a class="nav-link" routerLink="/project-list" *ngIf="auth.isLoggednIn()">
-						<i class="fas fa-id-card-alt"></i>
+						<i class="fas fa-project-diagram"></i>
 						<p>Project</p>
 					</a>
 				</li>
 				<li class="nav-item ">
 					<a class="nav-link" routerLink="/technology-list" *ngIf="auth.isLoggednIn()">
-						<i class="fas fa-id-card-alt"></i>
+						<i class="fa fa-lightbulb-o" style="font-size: 36px;" ></i>
 						<p>Technology</p>
 					</a>
 				</li>
 				<li class="nav-item ">
 					<a class="nav-link" routerLink="/catagory-list" *ngIf="auth.isLoggednIn()">
-						<i class="fas fa-id-card-alt"></i>
+						<i class="fa fa-list-alt" ></i>
 						<p>Catagory</p>
 					</a>
 				</li>
 				<li class="nav-item ">
+					<a class="nav-link" routerLink="/contact-request" *ngIf="auth.isLoggednIn()">
+						<i class="fas fa-id-card-alt"></i>
+						<p>Contact Requests</p>
+					</a>
+				</li>
+				<li class="nav-item ">
 					<a class="nav-link" routerLink="/login" (click)="Logout()" *ngIf="auth.isLoggednIn()">
-						<i class="fas fa-sign-out-alt" style="font-size: 17px;"></i>
+						<i class="fas fa-sign-out-alt" style="font-size: 19px;"></i>
 						<p>Log out</p>
 					</a>
 				</li>

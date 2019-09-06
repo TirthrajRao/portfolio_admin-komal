@@ -7,6 +7,7 @@ import { ProjectComponent } from './project/project.component';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { TechnologyComponent } from './technology/technology.component';
 import { CatagoryComponent } from './catagory/catagory.component';
+import { ContactComponent } from './contact/contact.component';
 
 const routes: Routes = [
 	{
@@ -42,6 +43,11 @@ const routes: Routes = [
 	{
 		path: 'catagory-list',
 		component: CatagoryComponent,
+		canActivate: [AuthGuard]
+	},
+	{
+		path: 'contact-request',
+		component: ContactComponent,
 		canActivate: [AuthGuard]
 	},
 	{

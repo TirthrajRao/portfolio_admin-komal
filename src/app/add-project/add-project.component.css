@@ -22,4 +22,25 @@
     max-height: 28px;
     overflow-y: scroll;
  }
-  
+ .icon-button{
+  background: transparent;
+  border: 1px solid #8080802e;
+  cursor: pointer;
+  line-height: 1;
+  margin: 0;
+  padding: 6px;
+  border-radius: 5px;
+  }
+
+  ul.project-avatar{
+    display: inline-block;
+    width: 100%;
+  }
+  ul.project-avatar li {
+    display: inline-block;
+    margin: 5px;
+    float: left;
+    padding: 3px;
+    border: 2px solid transparent;
+  }
+ 

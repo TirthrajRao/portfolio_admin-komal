@@ -18,6 +18,9 @@ export class ProjectComponent implements OnInit {
     this.getAllProjects();
   }
 
+  /**
+   * Get projects list
+   */
   getAllProjects() {
     this._adminService.getAllProjects().subscribe((res: any) => {
       console.log('res of all projects=========>',res)
@@ -28,10 +31,17 @@ export class ProjectComponent implements OnInit {
     })
   }
 
+  /**
+   * Link to Add project page
+   */
   addProject(){
     this.router.navigate(['add-project'])
   }
 
+  /**
+   * Delete Project by id
+   * @param {Object} projectId 
+   */
   deleteProject(projectId){
     console.log(projectId);
     this._adminService.deleteProject(projectId).subscribe((res:any)=>{

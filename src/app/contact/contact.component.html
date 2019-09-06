@@ -1,0 +1,60 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card" id="allRecords">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title ">Contact Requests</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th>
+                  #
+                </th>
+                <th>
+                  Name
+                </th>
+                <th>
+                  Email
+                </th>
+                <th>
+                  Company Name
+                </th>
+                <th>
+                  Company Number
+                </th>
+                <th>
+                  Message
+                </th>
+              </thead>
+              <tbody *ngIf="allContactRequests.length">
+                <tr *ngFor="let contact of allContactRequests; let i = index;">
+                  <td>
+                    {{i+1}}
+                  </td>
+                  <td>
+                    {{contact.name || 'N/A'}}
+                  </td>
+                  <td>
+                    {{contact.email || 'N/A'}}
+                  </td>
+                  <td>
+                    {{contact.companyName || 'N/A'}}
+                  </td>
+                  <td>
+                    {{contact.companyNumber || 'N/A'}}
+                  </td>
+                  <td>
+                    {{contact.message || 'N/A'}}
+                  </td>
+                </tr>
+              </tbody>
+              <h2 *ngIf="allContactRequests.length<=0" class="text-center">No Contact Requests</h2>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

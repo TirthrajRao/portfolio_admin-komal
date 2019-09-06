@@ -4,7 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as ClassicEditorBuild from '@ckeditor/ckeditor5-build-classic';
 import { AdminService } from '../admin.service';
-import {AlertService} from '../alert.service';
+import { AlertService } from '../alert.service';
+import { config } from '../config';
 import * as _ from 'lodash';
 declare var $: any;
 
@@ -33,12 +34,15 @@ export class AddProjectComponent implements OnInit {
   singleProject: any = [];
   hashtag: any = [];
   allTag: any = [];
-  public items = [
-     
-  ];
-  constructor(public _adminService: AdminService, public router: Router, public route: ActivatedRoute,public _alertService:AlertService) {
+  public items = [];
+  projectTech: any = [];
+  projectCategory: any = [];
+  path = config.baseMediaUrl;
+  logoFile:any =[]
+
+  constructor(public _adminService: AdminService, public router: Router, public route: ActivatedRoute, public _alertService: AlertService) {
     this.getAllTags();
-  
+
     this.route.params.subscribe(params => {
       this.projectId = params.id;
       if (this.projectId) {
@@ -57,12 +61,13 @@ export class AddProjectComponent implements OnInit {
       services: new FormControl('', [Validators.required]),
       features: new FormControl('', [Validators.required]),
       images: new FormControl(''),
-      hashtag: new FormControl('',[Validators.required])
+      hashtag: new FormControl('', [Validators.required])
     });
 
     this.addTechnologyForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
-      desc: new FormControl('')
+      desc: new FormControl(''),
+      logo: new FormControl('')
     })
   }
 
@@ -85,6 +90,9 @@ export class AddProjectComponent implements OnInit {
 
   }
 
+  /**
+   * Get All Tags
+   */
   getAllTags() {
     this._adminService.getAllTag().subscribe((res: any) => {
       console.log(res);
@@ -97,8 +105,12 @@ export class AddProjectComponent implements OnInit {
       console.log(err);
     })
   }
-  projectTech: any = [];
-  projectCategory: any = [];
+
+
+  /**
+   * Get Single Project
+   * @param {String} projectId 
+   */
   getProjectById(projectId) {
     console.log(projectId);
     this._adminService.getProjectById(projectId).subscribe((res: any) => {
@@ -113,7 +125,7 @@ export class AddProjectComponent implements OnInit {
       _.forEach(this.singleProject.technology, tech => {
         this.projectTech.push(tech._id);
       });
-      console.log('this.singleProject.category',this.singleProject.category)
+      console.log('this.singleProject.category', this.singleProject.category)
       // this.projectCategory = this.singleProject.category
       this.addProjectForm.controls.technology.setValue(this.projectTech);
       this.addProjectForm.controls.category.setValue(this.singleProject.category._id);
@@ -124,6 +136,10 @@ export class AddProjectComponent implements OnInit {
     })
   }
 
+  /**
+   * Colour validation for plus button
+   * @param {object} form 
+   */
   validColor(form) {
     const colorregx = '^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$'
     if (!form.colorPalette.match(colorregx)) {
@@ -132,9 +148,14 @@ export class AddProjectComponent implements OnInit {
       this.isValidColor = true;
     }
   }
+
+  /**
+   * Add Colour
+   * @param  {object} form 
+   */
   addColor(form) {
     console.log("==========", form.colorPalette);
-    if(this.colorCode.indexOf(form.colorPalette)=== -1){
+    if (this.colorCode.indexOf(form.colorPalette) === -1) {
       this.colorCode.push(form.colorPalette);
     }
     console.log('this.colorCode=========>', this.colorCode)
@@ -142,12 +163,20 @@ export class AddProjectComponent implements OnInit {
     this.isValidColor = false;
 
   }
+  /**
+   * remove colour from colorcode array
+   * @param {number} index 
+   */
   removeColor(index) {
     console.log('index========', index);
     this.colorCode.splice(index, 1);
     console.log("remove clor code=======>", this.colorCode)
   }
 
+  /**
+   * Methods For ckeditor
+   * @param editor 
+   */
   public onReadyproducts(editor) {
     editor.ui.getEditableElement().parentElement.insertBefore(
       editor.ui.view.toolbar.element,
@@ -170,19 +199,16 @@ export class AddProjectComponent implements OnInit {
   public onChangeproducts({ editor }: ChangeEvent) {
     const data = editor.getData();
     console.log(data)
-    // this.comment = data.replace(/<\/?[^>]+(>|$)/g, "");
     this.addProjectForm.controls.products.setValue(data);
   }
   public onChangeservices({ editor }: ChangeEvent) {
     const data = editor.getData();
     console.log(data)
-    // this.comment = data.replace(/<\/?[^>]+(>|$)/g, "");
     this.addProjectForm.controls.services.setValue(data);
   }
   public onChangefeatures({ editor }: ChangeEvent) {
     const data = editor.getData();
     console.log(data)
-    // this.comment = data.replace(/<\/?[^>]+(>|$)/g, "");
     this.addProjectForm.controls.features.setValue(data);
   }
 
@@ -196,10 +222,10 @@ export class AddProjectComponent implements OnInit {
     this.model.servicesData = '';
     this.model.featuresData = '';
   }
-  addTechnolgy() {
-    console.log("==========>==========")
-  }
 
+  /**
+   * get All Category list
+   */
   getAllCategory() {
     this._adminService.getAllCategory().subscribe((res: any) => {
       console.log('res of all category=========>', res)
@@ -210,6 +236,9 @@ export class AddProjectComponent implements OnInit {
     })
   }
 
+  /**
+   * Get Technology list
+   */
   getAllTechnology() {
     this._adminService.getAllTechnology().subscribe((res: any) => {
       console.log('res of all Technology=========>', res)
@@ -219,22 +248,27 @@ export class AddProjectComponent implements OnInit {
       console.error(err);
     })
   }
+
+  /**
+   * Add Project
+   * @param {object} form 
+   */
   addProject(form) {
     console.log('data of form==================>', form);
     this.addProjectForm.controls.colorPalette.setValue(this.colorCode);
     const arr = [];
     console.log("============", this.addProjectForm.value);
-    _.forEach(form.hashtag,tag=>{
+    _.forEach(form.hashtag, tag => {
       arr.push(tag.display);
     })
-    console.log('arrr========>',arr);
-     this.addProjectForm.controls.hashtag.setValue(arr);
+    console.log('arrr========>', arr);
+    this.addProjectForm.controls.hashtag.setValue(arr);
     const data = new FormData();
     _.forOwn(this.addProjectForm.value, (value, key) => {
       data.append(key, value);
     });
     if (this.file.length > 0) {
-      console.log("=========this.s",this.file)
+      console.log("=========this.s", this.file)
       for (let i = 0; i <= this.file.length; i++) {
         data.append('uploadFile', this.file[i]);
       }
@@ -251,9 +285,44 @@ export class AddProjectComponent implements OnInit {
       this._alertService.failurAlert();
     })
   }
+  /**
+   * select logo of technology
+   * @param {object} event 
+   */
+  logoSelected(event) {
+    this.logoFile = event.target.files;
+    console.log(this.logoFile)
+  }
 
-  addTechnology(data) {
-    console.log('data value================>', data);
+  /**
+   * Add Technology logo
+   * @param value 
+   */
+  addIcon(value) {
+    console.log('value==========>', value)
+    this.addTechnologyForm.value['logo'] = value;
+    console.log(this.addTechnologyForm.value['logo']);
+    // this.url = this.baseUrl+this.addForm.value['avatar'];
+    $('#basicExampleModal').modal('hide');
+  }
+
+  /**
+   * Add Technology
+   * @param {object} data 
+   */
+  addTechnology(detail) {
+    console.log('data value================>', detail);
+    const data = new FormData();
+    _.forOwn(this.addTechnologyForm.value, (value, key) => {
+      data.append(key, value);
+    });
+    console.log("form data==========>", this.addTechnologyForm.value)
+    if (this.logoFile.length > 0) {
+      console.log("=========this.s", this.logoFile)
+      for (let i = 0; i <= this.logoFile.length; i++) {
+        data.append('uploadFile', this.logoFile[i]);
+      }
+    }
     this._adminService.addTechnology(data).subscribe((res: any) => {
       console.log("add technology=========>", res);
       $('#modaladdTechnologyForm').modal('hide');
@@ -263,22 +332,26 @@ export class AddProjectComponent implements OnInit {
     })
   }
 
+  /**
+   * Update Project
+   * @param {object} form 
+   */
   updateProject(form) {
     console.log('data of form==================>', form)
     this.addProjectForm.controls.colorPalette.setValue(this.colorCode);
     console.log("============", this.addProjectForm.value);
     const arr = [];
     console.log("============", this.addProjectForm.value);
-    _.forEach(form.hashtag,tag=>{
-      if(tag.display){
+    _.forEach(form.hashtag, tag => {
+      if (tag.display) {
         arr.push(tag.display);
-      } else{
+      } else {
         arr.push(tag);
       }
     })
-    console.log('arrr========>',arr);
-     this.addProjectForm.controls.hashtag.setValue(arr);
-     console.log(this.addProjectForm.value)
+    console.log('arrr========>', arr);
+    this.addProjectForm.controls.hashtag.setValue(arr);
+    console.log(this.addProjectForm.value)
     const data = new FormData();
     _.forOwn(this.addProjectForm.value, (value, key) => {
       data.append(key, value);

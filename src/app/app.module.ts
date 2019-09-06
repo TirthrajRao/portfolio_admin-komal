@@ -25,6 +25,7 @@ import { ProjectComponent } from './project/project.component';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { TechnologyComponent } from './technology/technology.component';
 import { CatagoryComponent } from './catagory/catagory.component';
+import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { CatagoryComponent } from './catagory/catagory.component';
     AddProjectComponent,
     TechnologyComponent,
     CatagoryComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,

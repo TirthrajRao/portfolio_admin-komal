@@ -36,6 +36,10 @@ export class LoginComponent implements OnInit {
 		this.registerForm.controls.recaptcha.setValue(event);
 	}
 
+	/**
+	 * Login User
+	 * @param {Object} detail 
+	 */
 	login(detail) {
 		this.recaptchaV3Service.execute('importantAction')
 			.subscribe((token) => {
@@ -55,16 +59,6 @@ export class LoginComponent implements OnInit {
 					this._alertService.failurAlert();
 				})
 			});
-		// this.loginService.authorize(detail).subscribe((res: any) => {
-		// 	localStorage.setItem('users', JSON.stringify(res));
-		// 	localStorage.setItem('token', JSON.stringify(res.token));
-		// 	this.msg = 'Logged in successfully! ';
-		// 	this.router.navigate(['/dashboard']);
-		// }, err => {
-		// 	console.log('error', err);
-		// 	this.errmsg = 'Incorrect info!';
-		// 	this.loading = false;
-		// })
 
 	}
 }

@@ -62,7 +62,9 @@ export class TechnologyComponent implements OnInit {
 
   logoSelected(event) {
     this.file = event.target.files;
-    console.log(this.file)
+    console.log(this.file);
+    this.addTechnologyForm.value['logo'] = '';
+
   }
 
   /**

@@ -56,6 +56,9 @@ export class TechnologyComponent implements OnInit {
     console.log('value==========>', value)
     this.addTechnologyForm.value['logo'] = value;
     console.log(this.addTechnologyForm.value['logo']);
+    if(this.file.length){
+      this.addTechnologyForm.value['logo'] = '';
+    }
     // this.url = this.baseUrl+this.addForm.value['avatar'];
     $('#basicExampleModal').modal('hide');
   }
@@ -64,6 +67,7 @@ export class TechnologyComponent implements OnInit {
     this.file = event.target.files;
     console.log(this.file);
     this.addTechnologyForm.value['logo'] = '';
+    $('#basicExampleModal').modal('hide');
 
   }
 

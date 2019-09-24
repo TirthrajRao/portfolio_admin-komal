@@ -1,3 +1,12 @@
-<p>
-  add-logo-design works!
-</p>
+<div class="container-fluid">
+  <div class="row" class="text-center">
+    <h3>Add Logo Design</h3>
+    <form>
+      <button class="btn btn-default" (click)="file.click()">Select
+        Image</button>
+      <input type="file" #file accept=".jpeg, .jpg, .png, .gif" hidden (change)="logoDesignSelected($event)" multiple>
+    </form>
+    <img *ngFor="let url of urls" [src]="url" class="rounded mb-3" width="180" class="p-2">
+  </div>
+  <button class="btn btn-primary add_button"(click)="addLogoDesign()" [disabled]="!urls.length">Add</button>
+</div>

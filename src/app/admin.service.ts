@@ -309,4 +309,16 @@ export class AdminService {
       })
     );
   }
+
+  /**
+   * Add Logo Design
+   * @param {Object} data 
+   */
+  addLogoDesign(data){
+    return this.http.post(config.baseApiUrl + 'project/add-logo-design', data).pipe(
+      map(res => {
+        return res;
+      })
+    );
+  }
 }

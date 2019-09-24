@@ -10,6 +10,7 @@ import { CatagoryComponent } from './catagory/catagory.component';
 import { ContactComponent } from './contact/contact.component';
 import { AddBrochureComponent } from './add-brochure/add-brochure.component';
 import { AddLandingPageComponent } from './add-landing-page/add-landing-page.component';
+import { AddLogoDesignComponent } from './add-logo-design/add-logo-design.component';
 const routes: Routes = [
 	{
 		path: '',
@@ -60,8 +61,12 @@ const routes: Routes = [
 		component: AddBrochureComponent
 	},
 	{
-		path:'add-landing-page',
-		component:AddLandingPageComponent
+		path: 'add-landing-page',
+		component: AddLandingPageComponent
+	},
+	{
+		path:'add-logo-design',
+		component:AddLogoDesignComponent
 	}
 ];
 

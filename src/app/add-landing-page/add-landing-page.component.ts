@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { AlertService } from '../alert.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-add-landing-page',
@@ -12,9 +14,34 @@ export class AddLandingPageComponent implements OnInit {
   imagePath;
   imgURL;
   urls = new Array<string>();
-  constructor(public _adminService: AdminService, public _alertService: AlertService) { }
+  addLandingPageForm:FormGroup;
+  allTag:any = [];
+  public items = [];
+
+  constructor(public _adminService: AdminService, public _alertService: AlertService) { 
+    this.getAllTags();
+    this.addLandingPageForm = new FormGroup({
+      hashtag: new FormControl('', [Validators.required])
+    })
+  }
 
   ngOnInit() {
+  }
+
+  /**
+   * Get All Tags
+   */
+  getAllTags() {
+    this._adminService.getAllTag().subscribe((res: any) => {
+      console.log(res);
+      _.forEach(res.data, (tag => {
+        this.allTag.push(tag.hashtag);
+      }))
+      console.log(this.allTag);
+      this.items = this.allTag
+    }, err => {
+      console.log(err);
+    })
   }
 
   /**
@@ -37,9 +64,21 @@ export class AddLandingPageComponent implements OnInit {
 
   /**
    * Add Landing page
+   * @param {object} form 
    */
-  addLandingPage() {
+  addLandingPage(form) {
+    console.log("detail=========>",form);
+    const arr = [];
+    _.forEach(form.hashtag, tag => {
+      arr.push(tag.display);
+    })
+    console.log('arrr========>', arr);
+    this.addLandingPageForm.controls.hashtag.setValue(arr);
+    console.log(this.addLandingPageForm.value);
     const data = new FormData();
+    _.forOwn(this.addLandingPageForm.value, (value, key) => {
+      data.append(key, value);
+    });
     if (this.files.length > 0) {
       console.log("=========this.s", this.files)
       for (let i = 0; i <= this.files.length; i++) {
@@ -50,6 +89,7 @@ export class AddLandingPageComponent implements OnInit {
       console.log("res:=>", res);
       this.urls = [];
       this._alertService.successAlert(res.message);
+      this.addLandingPageForm.reset();
     }, err => {
       console.log(err);
       this._alertService.failurAlert();

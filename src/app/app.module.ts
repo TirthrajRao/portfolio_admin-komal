@@ -26,6 +26,9 @@ import { AddProjectComponent } from './add-project/add-project.component';
 import { TechnologyComponent } from './technology/technology.component';
 import { CatagoryComponent } from './catagory/catagory.component';
 import { ContactComponent } from './contact/contact.component';
+import { AddBrochureComponent } from './add-brochure/add-brochure.component';
+import { AddLandingPageComponent } from './add-landing-page/add-landing-page.component';
+import { AddLogoDesignComponent } from './add-logo-design/add-logo-design.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,9 @@ import { ContactComponent } from './contact/contact.component';
     TechnologyComponent,
     CatagoryComponent,
     ContactComponent,
+    AddBrochureComponent,
+    AddLandingPageComponent,
+    AddLogoDesignComponent,
   ],
   imports: [
     BrowserModule,

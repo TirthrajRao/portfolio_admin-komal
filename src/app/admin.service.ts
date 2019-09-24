@@ -194,7 +194,7 @@ export class AdminService {
       })
     );
   }
-  
+
   /**
    * Add Category
    * @param {object} details 
@@ -232,11 +232,11 @@ export class AdminService {
       })
     );
   }
- /**
-   * Update category by id
-   * @param {object} details 
-   * @param {String} categoryId 
-   */
+  /**
+    * Update category by id
+    * @param {object} details 
+    * @param {String} categoryId 
+    */
   updateCategory(details, categoryId) {
     console.log(details, categoryId)
     const httpOptions = {
@@ -251,7 +251,7 @@ export class AdminService {
       })
     );
   }
-  
+
   /**
    * Get All Tags
    */
@@ -280,6 +280,19 @@ export class AdminService {
       })
     };
     return this.http.get(config.baseApiUrl + 'contact-us/').pipe(
+      map(res => {
+        return res;
+      })
+    );
+  }
+
+  /**
+   * Add Brochure
+   * @param {Object} data 
+   */
+  addBrochure(data) {
+    console.log("data=>", data);
+    return this.http.post(config.baseApiUrl + 'project/add-brochure',data).pipe(
       map(res => {
         return res;
       })

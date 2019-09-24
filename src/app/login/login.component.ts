@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit {
 	message: any;
 	errmsg: string = null;
 	loading = false;
-
 	user = {
 		email: '',
 		password: ''

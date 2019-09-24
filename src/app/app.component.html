@@ -38,6 +38,12 @@
 					</a>
 				</li>
 				<li class="nav-item ">
+					<a class="nav-link" routerLink="/add-brochure" *ngIf="auth.isLoggednIn()">
+						<i class="fas fa-university"  style="font-size: 30px;"></i>
+						<p>Add Brochure</p>
+					</a>
+				</li>
+				<li class="nav-item ">
 					<a class="nav-link" routerLink="/login" (click)="Logout()" *ngIf="auth.isLoggednIn()">
 						<i class="fas fa-sign-out-alt" style="font-size: 19px;"></i>
 						<p>Log out</p>

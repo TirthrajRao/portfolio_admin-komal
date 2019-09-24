@@ -8,7 +8,7 @@ import { AddProjectComponent } from './add-project/add-project.component';
 import { TechnologyComponent } from './technology/technology.component';
 import { CatagoryComponent } from './catagory/catagory.component';
 import { ContactComponent } from './contact/contact.component';
-
+import { AddBrochureComponent } from './add-brochure/add-brochure.component';
 const routes: Routes = [
 	{
 		path: '',
@@ -53,6 +53,10 @@ const routes: Routes = [
 	{
 		path: 'login',
 		component: LoginComponent,
+	},
+	{
+		path: 'add-brochure',
+		component: AddBrochureComponent
 	}
 ];
 

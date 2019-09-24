@@ -1,3 +1,12 @@
-<p>
-  add-landing-page works!
-</p>
+<div class="container-fluid">
+  <div class="row" class="text-center">
+    <h3>Add Landingpage</h3>
+    <form>
+      <button class="btn btn-default" (click)="file.click()">Select
+        Image</button>
+      <input type="file" #file accept=".jpeg, .jpg, .png, .gif" hidden (change)="landingPageSelected($event)" multiple>
+    </form>
+    <img *ngFor="let url of urls" [src]="url" class="rounded mb-3" width="180" class="p-2">
+  </div>
+  <button class="btn btn-primary add_button"(click)="addLandingPage()" [disabled]="!urls.length">Add</button>
+</div>

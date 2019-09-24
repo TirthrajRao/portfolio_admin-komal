@@ -9,6 +9,7 @@ import { TechnologyComponent } from './technology/technology.component';
 import { CatagoryComponent } from './catagory/catagory.component';
 import { ContactComponent } from './contact/contact.component';
 import { AddBrochureComponent } from './add-brochure/add-brochure.component';
+import { AddLandingPageComponent } from './add-landing-page/add-landing-page.component';
 const routes: Routes = [
 	{
 		path: '',
@@ -57,6 +58,10 @@ const routes: Routes = [
 	{
 		path: 'add-brochure',
 		component: AddBrochureComponent
+	},
+	{
+		path:'add-landing-page',
+		component:AddLandingPageComponent
 	}
 ];
 

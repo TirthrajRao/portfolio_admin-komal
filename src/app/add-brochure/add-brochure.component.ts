@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from '../admin.service';
 import { AlertService } from '../alert.service';
 
@@ -18,6 +17,10 @@ export class AddBrochureComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * Select Images
+   * @param {Object} event 
+   */
   broucherSelected(event) {
     this.urls = [];
     this.files = event.target.files;

@@ -292,7 +292,18 @@ export class AdminService {
    */
   addBrochure(data) {
     console.log("data=>", data);
-    return this.http.post(config.baseApiUrl + 'project/add-brochure',data).pipe(
+    return this.http.post(config.baseApiUrl + 'project/add-brochure', data).pipe(
+      map(res => {
+        return res;
+      })
+    );
+  }
+  /**
+   * Add Landing Page
+   * @param {object} data 
+   */
+  addLandingPage(data) {
+    return this.http.post(config.baseApiUrl + 'project/add-landingpage', data).pipe(
       map(res => {
         return res;
       })

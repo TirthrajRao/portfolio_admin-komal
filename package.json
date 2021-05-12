@@ -23,7 +23,7 @@
     "@ckeditor/ckeditor5-build-classic": "^12.2.0",
     "angular-bootstrap-colorpicker": "^3.0.32",
     "angular-google-recaptcha": "^1.0.3",
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "chartist": "^0.11.0",
     "core-js": "^2.5.4",
     "ng-recaptcha": "^4.3.0",
